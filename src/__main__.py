@@ -48,5 +48,7 @@ while current_encounter:
             current_encounter = encounters[next_encounter_name]
         except KeyError:
             print(
-                f"Error: {previous_encounter.name} has an action {user_action.prompt} that references an invalid encounter: {next_encounter_name}")
+                f"Error: {previous_encounter.name} has an action {user_action.prompt} "
+                f"that references an invalid encounter: {next_encounter_name}"
+            )
             break

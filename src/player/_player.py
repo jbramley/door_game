@@ -8,4 +8,3 @@ class Player:
     curr_mp: int
     max_hp: int
     curr_hp: int
-    

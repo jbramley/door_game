@@ -6,7 +6,7 @@ from action._command import (
     ForageAction,
     GoToAction,
     LookForEnemyAction,
-    QuitAction
+    QuitAction,
 )
 
 __all__ = [
@@ -17,5 +17,5 @@ __all__ = [
     "ForageAction",
     "GoToAction",
     "LookForEnemyAction",
-    "QuitAction"
+    "QuitAction",
 ]
