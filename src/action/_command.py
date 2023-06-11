@@ -3,13 +3,14 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from random import random, choice
 
+from player import Player
 from settings import SELF_ENCOUNTER_NAME, DEATH_ENCOUNTER_NAME
 from game_types import OptionalEncounterName, EncounterName
 
 
 class BaseAction(ABC):
     @abstractmethod
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         ...
 
 
@@ -17,7 +18,7 @@ class DeathAction(BaseAction):
     def __init__(self, death_message: str):
         self._death_message = death_message
 
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         print(self._death_message)
         print("You are dead")
         return None
@@ -28,7 +29,7 @@ class ForageAction(BaseAction):
         self._forage_target = forage_target
         self._probability = probability
 
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         if random() <= self._probability:
             print(f"You found a {self._forage_target}!")
         else:
@@ -42,7 +43,7 @@ class LookForEnemyAction(BaseAction):
         self._probability = probability
         self._combat_encounter = combat_encounter
 
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         if random() <= self._probability:
             print(f"You found a {self._enemy}")
             return self._combat_encounter
@@ -52,7 +53,7 @@ class LookForEnemyAction(BaseAction):
 
 
 class QuitAction(BaseAction):
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         user_input = input("Are you sure? ")
         if user_input.strip().lower() in ["y", "yes"]:
             return None
@@ -63,7 +64,7 @@ class GoToAction(BaseAction):
     def __init__(self, encounter: str):
         self._encounter = encounter
 
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         return self._encounter
 
 
@@ -72,7 +73,7 @@ class FightAction(BaseAction):
         self._success_probability = success_probability
         self._victory_encounter = victory_encounter
 
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         if random() <= self._success_probability:
             return self._victory_encounter
         return DEATH_ENCOUNTER_NAME
@@ -83,7 +84,7 @@ class FleeAction(BaseAction):
         self._success_probability = success_probability
         self._flee_encounters = flee_encounters
 
-    def execute(self) -> OptionalEncounterName:
+    def execute(self, player: Player) -> OptionalEncounterName:
         if random() <= self._success_probability:
             return choice(self._flee_encounters)
         return SELF_ENCOUNTER_NAME
