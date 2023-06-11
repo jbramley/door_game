@@ -3,7 +3,9 @@ from encounter._encounter import Encounter, EncounterAction
 from game_types import EncounterName
 
 
-def make_combat_action(enemy: str, victory_encounter: EncounterName, flee_encounters: list[EncounterName]) -> Encounter:
+def make_combat_encounter(
+    enemy: str, victory_encounter: EncounterName, flee_encounters: list[EncounterName]
+) -> Encounter:
     return Encounter(
         name=f"combat_{enemy}",
         description=f"You have entered combat with a {enemy}",

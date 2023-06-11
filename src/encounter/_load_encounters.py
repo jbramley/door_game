@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from action import ForageAction, GoToAction, LookForEnemyAction
-from encounter._action_factories import make_combat_action
+from encounter._encounter_factories import make_combat_encounter
 from encounter._encounter import Encounter, EncounterAction
 from game_types import EncounterName
 
@@ -29,7 +29,7 @@ def load_encounters() -> dict[EncounterName, Encounter]:
                 EncounterAction("w", "[W]alk out of the forest", GoToAction("edge_of_woods")),
             ],
         ),
-        make_combat_action("Dropbear", EncounterName("in_the_woods"), [EncounterName("edge_of_woods")]),
+        make_combat_encounter("Dropbear", EncounterName("in_the_woods"), [EncounterName("edge_of_woods")]),
     ]
 
     return {e.name: e for e in encounters}
